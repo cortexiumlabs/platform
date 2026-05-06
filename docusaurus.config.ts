@@ -39,7 +39,12 @@ const config: Config = {
     [
       'classic',
       {
-        docs: false,
+        docs: {
+          id: 'product',              // Product docs plugin instance
+          path: 'product/docs',            // Folder: /product/docs/
+          routeBasePath: 'docs',      // Accessible at /docs on the main domain
+          sidebarPath: require.resolve('./product/sidebars.ts'),
+        },
         blog: {
           showReadingTime: true,
           showLastUpdateTime: true,
@@ -61,9 +66,9 @@ const config: Config = {
       '@docusaurus/plugin-content-docs',
       {
         id: 'vectra',
-        path: 'vectra',
+        path: 'vectra/docs',
         routeBasePath: 'vectra',
-        sidebarPath: require.resolve('./vectra.ts'),
+        sidebarPath: require.resolve('./vectra/sidebars.ts'),
       },
     ]
   ],
