@@ -11,7 +11,7 @@ const products = [
     name: 'Vectra',
     description:
       'Intent-aware governance and runtime control for autonomous AI agents.',
-    link: '/vectra/intro',
+    link: '/vectra/overview',
     status: 'core',
   }
 ];
@@ -36,7 +36,7 @@ function Hero() {
 
           <div className={styles.actions}>
             <Link
-              to="/vectra/intro"
+              to="/vectra/overview"
               className={clsx('button button--primary button--lg')}
             >
               Get Started with Vectra

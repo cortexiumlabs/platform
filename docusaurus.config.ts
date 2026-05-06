@@ -92,7 +92,7 @@ const config: Config = {
           items: [
             {
               label: 'Vectra',
-              to: '/vectra/intro'
+              to: '/vectra/overview'
             }
           ],
         },
