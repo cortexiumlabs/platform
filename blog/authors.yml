@@ -1,0 +1,15 @@
+maintainers:
+  name: Maintainers
+  title: The Cortexium Labs project maintenance team
+  image_url: /img/maintainer.png
+
+aminziagham:
+  name: Amin Ziagham
+  title: Founder of Cortexium Labs
+  url: https://ziagham.com
+  image_url: https://github.com/ziagham.png
+  page: true
+  socials:
+    x: AminZiagham
+    linkedin: ziagham
+    github: ziagham

@@ -1,0 +1,85 @@
+:root {
+  /* Primary (accessible, used for text & buttons) */
+  --ifm-color-primary: #007c80;
+  --ifm-color-primary-dark: #006e72;
+  --ifm-color-primary-darker: #00676b;
+  --ifm-color-primary-darkest: #005357;
+  --ifm-color-primary-light: #00979c;
+  --ifm-color-primary-lighter: #00a1a6;
+  --ifm-color-primary-lightest: #00c2c8;
+
+  /* Brand accent (your cyan) */
+  --ifm-color-info: #37ffff;
+
+  --ifm-color-border-gray: #dcdcdc;
+  --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.08);
+
+  /* Hero (controlled cyan gradient) */
+  --ifm-hero-bg-start: #005f63;
+  --ifm-hero-bg-mid: #005f63;
+  --ifm-hero-bg-end: #37ffff;
+
+  --ifm-hero-kicker-text: #37ffff;
+  --ifm-hero-title-text: #ffffff;
+  --ifm-hero-subtext: rgba(255, 255, 255, 0.9);
+  --ifm-hero-border: rgba(255, 255, 255, 0.2);
+}
+
+/* =========================
+   DARK MODE (CORE BRAND)
+   ========================= */
+[data-theme='dark'] {
+/* Lighter cyan for visibility on dark */
+--ifm-color-primary: #5fffff;
+--ifm-color-primary-dark: #4de6e6;
+--ifm-color-primary-darker: #45d4d4;
+--ifm-color-primary-darkest: #35a7a7;
+--ifm-color-primary-light: #7affff;
+--ifm-color-primary-lighter: #8cffff;
+--ifm-color-primary-lightest: #b8ffff;
+
+--ifm-background-color: #0a0f14;
+--ifm-background-surface-color: #0f1720;
+
+--ifm-navbar-background-color: rgba(10, 15, 20, 0.9);
+--ifm-footer-background-color: #0a0f14;
+
+--ifm-font-color-base: #e6edf3;
+--ifm-font-color-secondary: #94a3b8;
+
+/* Keep brand accent */
+--ifm-color-info: #37ffff;
+
+--ifm-color-border-gray: #444444;
+--docusaurus-highlighted-code-line-bg: rgba(255, 255, 255, 0.05);
+
+/* Avoid neon-on-black eye strain */
+--ifm-hero-bg-start: #061010;
+--ifm-hero-bg-mid: #0b1f1f;
+--ifm-hero-bg-end: #123535;
+
+--ifm-hero-kicker-text: #5fffff;
+--ifm-hero-title-text: #ffffff;
+--ifm-hero-subtext: rgba(255, 255, 255, 0.85);
+--ifm-hero-border: rgba(255, 255, 255, 0.15);
+}
+
+  /* Navbar refinement */
+.navbar {
+  border-bottom: 1px solid var(--ifm-color-border-gray) !important;
+  box-shadow: none !important;
+}
+
+.footer {
+  border-top: 1px solid var(--ifm-color-border-gray) !important;
+  box-shadow: none !important;
+}
+
+/* Optional: better button contrast */
+.button--primary {
+  font-weight: 500;
+}
+
+.button--outline {
+  border-width: 1px;
+}
