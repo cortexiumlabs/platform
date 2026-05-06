@@ -1,9 +1,0 @@
-welcome:
-  label: Welcome
-  permalink: /welcome
-  description: Welcome tag description
-
-introduction:
-  label: introduction
-  permalink: /introduction
-  description: Introduction tag description

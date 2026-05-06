@@ -1,257 +1,16 @@
-/* =========================
-   HERO
-========================= */
-.hero {
-  position: relative;
-  padding: 5rem 1rem 5rem;
-  text-align: center;
-  overflow: hidden;
-
-  border-bottom: 1px solid var(--ifm-hero-border);
-
-  background: var(--ifm-hero-bg-start);
-}
-
-.hero::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background-image:
-    linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
-  background-size: 48px 48px;
-  mask-image: radial-gradient(circle at center, rgba(0,0,0,1) 40%, rgba(0,0,0,0) 100%);
-  -webkit-mask-image: radial-gradient(circle at center, rgba(0,0,0,1) 40%, rgba(0,0,0,0) 100%);
-  pointer-events: none;
-  opacity: 0.9;
-}
-
-/* Primary ambient glow (center focus, more controlled) */
-.hero::after {
-  content: "";
-  position: absolute;
-  width: 900px;
-  height: 900px;
-  top: -320px;
-  left: 50%;
-  transform: translateX(-50%);
-  background: radial-gradient(
-    circle at center,
-    color-mix(in srgb, var(--ifm-color-primary) 55%, transparent) 0%,
-    transparent 65%
-  );
-  filter: blur(140px);
-  opacity: 0.22;
-  pointer-events: none;
-}
-
-.hero::marker,
-.hero::selection {
-  background: transparent;
-}
-
-.inner {
-  position: relative;
-  z-index: 2;
-  margin: 0 auto;
-
-  padding: 4rem;
-  border-radius: 20px;
-
-  background: color-mix(
-    in srgb,
-    var(--ifm-background-color) 70%,
-    transparent
-  );
-
-  backdrop-filter: blur(14px);
-
-  border: 1px solid transparent;
-
-  overflow: hidden;
-}
-
-.inner::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  border-radius: 20px;
-  padding: 2px;
-
-  background: linear-gradient(
-    120deg,
-    transparent 0%,
-    rgba(55, 255, 255, 0.25),
-    rgba(0, 124, 128, 0.75),
-    rgba(55, 255, 255, 0.45),
-    transparent 70%
-  );
-
-  /* border-only rendering */
-  -webkit-mask:
-    linear-gradient(#000 0 0) content-box,
-    linear-gradient(#000 0 0);
-  -webkit-mask-composite: xor;
-  mask-composite: exclude;
-
-  background-size: 300% 300%;
-  animation: borderFlow 5s linear infinite;
-
-  pointer-events: none;
-  z-index: 1;
-
-  opacity: 0.95;
-}
-
-@keyframes borderFlow {
-  0% {
-    background-position: 0% 50%;
-  }
-  50% {
-    background-position: 100% 50%;
-  }
-  100% {
-    background-position: 0% 50%;
-  }
-}
-
-.inner::after {
-  content: "";
-  position: absolute;
-  inset: -4px;
-  border-radius: 20px;
-
-  background: radial-gradient(
-    circle at 30% 20%,
-    rgba(55, 255, 255, 0.22),
-    rgba(0, 124, 128, 0.12),
-    transparent 65%
-  );
-
-  filter: blur(16px);
-  opacity: 0.7;
-
-  pointer-events: none;
-  z-index: 0;
-}
-
-.inner > * {
-  position: relative;
-  z-index: 2;
-}
-
-/* Optional: better typography feel */
-.hero h1 {
-  font-size: clamp(2.5rem, 5vw, 3.5rem);
-  letter-spacing: -0.02em;
-  line-height: 1.1;
-}
-
-.hero p {
-  font-size: 1.1rem;
-  opacity: 0.8;
-  margin-top: 1rem;
-}
-
-/* =========================
-   TYPOGRAPHY
-========================= */
-.kicker {
-  font-size: 0.75rem;
-  letter-spacing: 0.15em;
-  text-transform: uppercase;
-  color: var(--ifm-hero-kicker-text);
-  margin-bottom: 1rem;
-}
-
-.title {
-  font-size: clamp(2.6rem, 6vw, 4rem);
-  font-weight: 750;
-  line-height: 1.05;
-  margin-bottom: 1.2rem;
-
-  color: var(--ifm-hero-title-text);
-}
-
-.title span {
-  color: var(--ifm-color-primary-lightest);
-}
-
-.subtitle {
-  font-size: 1.1rem;
-  max-width: 680px;
-  margin: 0 auto 2rem;
-
-  color: var(--ifm-hero-subtext);
-}
-
-@media (max-width: 900px) {
-  .pillars {
-    grid-template-columns: 1fr;
-  }
-}
-
-.button--primary {
-  background: var(--ifm-color-primary);
-  border: none;
-  color: #fff;
-}
-
-.button--primary:hover {
-  background: var(--ifm-color-primary-dark);
-}
-
-/* =========================
-   CTA
-========================= */
-.actions {
+.wrapper {
+  min-height: 70vh;
   display: flex;
-  gap: 1rem;
+  align-items: center;
   justify-content: center;
-  flex-wrap: wrap;
+  padding: 2rem;
 }
 
-/* =========================
-   PRODUCTS
-========================= */
-.products {
-  padding: 4rem 1rem;
-
-  background: var(--ifm-background-surface-color);
-}
-
-.productsHeader {
+/* Card */
+.card {
   text-align: center;
-  margin-bottom: 2.5rem;
-}
-
-.productsHeader h2 {
-  font-size: 2rem;
-  margin-bottom: 0.5rem;
-}
-
-.productsHeader p {
-  color: var(--ifm-font-color-secondary);
-}
-
-/* =========================
-   GRID
-========================= */
-.grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 1.25rem;
-}
-
-/* =========================
-   CARD BASE
-========================= */
-.card,
-.cardPrimary {
-  border-radius: 16px;
-  padding: 1.5rem;
-
-  border: 1px solid var(--ifm-color-border-gray);
+  padding: 2.5rem 2rem;
+  border-radius: 14px;
 
   background: color-mix(
     in srgb,
@@ -259,143 +18,46 @@
     transparent
   );
 
-  color: var(--ifm-font-color-base);
+  border: 1px solid var(--ifm-color-emphasis-300);
+
+  max-width: 600px;
+  width: 100%;
 
   transition: all 0.2s ease;
 }
 
-.cardPrimary {
-  text-decoration: none;
+.card:hover {
   border-color: var(--ifm-color-primary);
 }
 
-.cardPrimary:hover {
-  transform: translateY(-4px);
-  border-color: var(--ifm-color-primary-light);
-  box-shadow: 0 10px 30px rgba(0, 120, 120, 0.15);
-}
-
-/* =========================
-   CONTENT
-========================= */
-.badge {
-  font-size: 0.7rem;
-  letter-spacing: 0.15em;
-  color: var(--ifm-color-primary);
-  margin-bottom: 0.4rem;
-}
-
-.cardTitle {
-  font-weight: 600;
-  font-size: 1.1rem;
-  margin-bottom: 0.4rem;
-}
-
-.cardDesc {
-  font-size: 0.9rem;
-  color: var(--ifm-font-color-secondary);
-  line-height: 1.4;
-}
-
-.cardFooter {
-  margin-top: 0.8rem;
-  font-weight: 600;
-  color: var(--ifm-color-primary);
-}
-
-/* =========================
-   PLACEHOLDER
-========================= */
-.placeholderIcon {
-  font-size: 1.5rem;
-  margin-bottom: 0.5rem;
-  color: var(--ifm-color-primary);
-}
-
-/* =========================
-   RESPONSIVE
-========================= */
-@media (max-width: 768px) {
-  .title {
-    font-size: 2.2rem;
-  }
-}
-
-/* =========================
-   ABOUT SECTION
-========================= */
-.about {
-  padding: 4rem 1rem;
-  border-bottom: 1px solid var(--ifm-color-border-gray);
-
-  background: var(--ifm-background-color);
-}
-
-.aboutInner {
-  display: grid;
-  grid-template-columns: 1.2fr 1fr;
-  gap: 2.5rem;
-  align-items: center;
-}
-
-/* LEFT */
-.aboutLeft h2 {
+.title {
   font-size: 2rem;
-  margin-bottom: 1rem;
-  color: var(--ifm-font-color-base);
+  letter-spacing: -0.02em;
+  margin-bottom: 0.4rem;
 }
 
-.aboutLeft p {
-  color: var(--ifm-font-color-secondary);
-  margin-bottom: 1rem;
-  line-height: 1.65;
+.note {
+  font-size: 0.9rem;
+  opacity: 0.6;
+  margin-bottom: 1.6rem;
 }
 
-/* RIGHT CARD */
-.aboutCard {
-  border-radius: 16px;
-  padding: 1.6rem;
+.primaryLink {
+  display: inline-block;
+  font-size: 0.95rem;
+  text-decoration: none;
 
-  background: color-mix(
-    in srgb,
-    var(--ifm-background-surface-color) 90%,
-    transparent
-  );
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
 
-  border: 1px solid var(--ifm-color-border-gray);
-
-  backdrop-filter: blur(8px);
-  transition: all 0.25s ease;
-}
-
-.aboutCard:hover {
-  border-color: var(--ifm-color-primary);
-}
-
-/* ITEMS */
-.aboutItem {
-  margin-bottom: 1.2rem;
-}
-
-.aboutItem:last-child {
-  margin-bottom: 0;
-}
-
-.aboutItem span {
-  display: block;
-  font-weight: 600;
-  margin-bottom: 0.25rem;
+  border: 1px solid var(--ifm-color-primary);
   color: var(--ifm-color-primary);
+
+  transition: all 0.2s ease;
 }
 
-.aboutItem p {
-  font-size: 0.92rem;
-  color: var(--ifm-font-color-secondary);
-}
-
-/* RESPONSIVE */
-@media (max-width: 900px) {
-  .aboutInner {
-    grid-template-columns: 1fr;
-  }
+.primaryLink:hover {
+  background: var(--ifm-color-primary);
+  color: #fff;
+  text-decoration: none;
 }
