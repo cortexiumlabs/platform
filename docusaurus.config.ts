@@ -248,10 +248,10 @@ switch (BUILD_TARGET) {
         '@docusaurus/plugin-content-docs',
         {
           id: 'vectra',
-          path: 'vectra/docs',
+          path: 'docs/vectra',
           routeBasePath: 'vectra',
           sidebarPath: require.resolve(
-            './vectra/sidebars.ts',
+            './docs/vectra/sidebars.ts',
           ),
         },
       ],
