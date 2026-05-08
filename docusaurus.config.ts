@@ -84,6 +84,7 @@ const config: Config = {
         alt: 'Cortexium Logo',
         src: 'img/logo.jpg',
         href: 'https://cortexiumlabs.com',
+        target: '_self',
       },
       items: [],
     },
@@ -95,6 +96,7 @@ const config: Config = {
         alt: 'Cortexium Logo',
         src: 'img/horizontal_logo.jpg',
         href: 'https://cortexiumlabs.com',
+        target: '_self',
         width: 196,
       },
 
@@ -154,9 +156,10 @@ switch (BUILD_TARGET) {
 
     config.themeConfig!.navbar.items = [
       {
-        href: 'https://docs.cortexium.dev',
-        label: 'Documentation',
+        to: 'https://docs.cortexium.dev',
+        label: 'Docs',
         position: 'left',
+        target: '_self',
       },
       // {
       //   to: '/products', 
@@ -172,6 +175,7 @@ switch (BUILD_TARGET) {
         href: 'https://github.com/cortexiumlabs',
         label: 'GitHub',
         position: 'right',
+        target: '_self',
       }
     ];
 
@@ -199,19 +203,16 @@ switch (BUILD_TARGET) {
 
     config.themeConfig!.navbar.items = [
       {
-        href: 'https://cortexiumlabs.com',
-        label: 'Home',
-        position: 'left',
-      },
-      {
-        href: 'https://docs.cortexium.dev',
+        to: 'https://docs.cortexium.dev',
         label: 'Docs',
         position: 'left',
+        target: '_self',
       },
       {
         href: 'https://cortexiumlabs.com/blog',
         label: 'Blog',
         position: 'left',
+        target: '_self',
       },
       {
         href: 'https://github.com/cortexiumlabs',
@@ -258,16 +259,21 @@ switch (BUILD_TARGET) {
 
     config.themeConfig!.navbar.items = [
       {
-        href: '/',
+        to: '/',
         label: 'Docs',
         position: 'left',
+        target: '_self',
       },
       {
-        type: 'docSidebar',
-        docsPluginId: 'vectra',
-        sidebarId: 'vectraSidebar',
-        label: 'Vectra',
+        href: 'https://cortexiumlabs.com/blog',
+        label: 'Blog',
         position: 'left',
+        target: '_self',
+      },
+      {
+        href: 'https://github.com/cortexiumlabs',
+        label: 'GitHub',
+        position: 'right',
       },
     ];
 

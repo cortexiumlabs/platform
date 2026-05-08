@@ -83,3 +83,9 @@
 .button--outline {
   border-width: 1px;
 }
+
+a svg,
+.navbar__item svg,
+.menu__link svg {
+  display: none !important;
+}
