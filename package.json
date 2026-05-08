@@ -7,17 +7,26 @@
     "start:main": "cross-env BUILD_TARGET=main docusaurus start",
     "start:dev": "cross-env BUILD_TARGET=dev docusaurus start",
     "start:docs": "cross-env BUILD_TARGET=docs docusaurus start",
+
     "build:main": "cross-env BUILD_TARGET=main docusaurus build",
     "build:dev": "cross-env BUILD_TARGET=dev docusaurus build",
     "build:docs": "cross-env BUILD_TARGET=docs docusaurus build",
+
     "swizzle": "docusaurus swizzle",
-    "deploy": "npm run build:main && wrangler deploy",
+    
+    "deploy:main": "npm run build:main && wrangler deploy",
+    "deploy:dev": "npm run build:dev && wrangler deploy",
+    "deploy:docs": "npm run build:docs && wrangler deploy",
+
     "clear": "docusaurus clear",
     "serve": "docusaurus serve",
     "write-translations": "docusaurus write-translations",
     "write-heading-ids": "docusaurus write-heading-ids",
     "typecheck": "tsc",
-    "preview": "npm run build:main && wrangler dev"
+
+    "preview:main": "npm run build:main && wrangler dev",
+    "preview:dev": "npm run build:dev && wrangler dev",
+    "preview:docs": "npm run build:docs && wrangler dev"
   },
   "dependencies": {
     "@docusaurus/core": "3.10.1",
