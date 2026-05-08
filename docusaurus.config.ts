@@ -2,42 +2,105 @@ import { themes as prismThemes } from 'prism-react-renderer';
 import type { Config } from '@docusaurus/types';
 import type * as Preset from '@docusaurus/preset-classic';
 
-// Supported build targets – add more as needed
-const BUILD_TARGET = (process.env.BUILD_TARGET ?? 'main') as
-  'main' | 'docs' | 'demo' | 'app';
+// ======================================================
+// Supported build targets
+// ======================================================
 
-// Base configuration shared by all builds
-const baseConfig: Config = {
-  title: 'Cortexium',
-  tagline: 'Build, govern, and operate autonomous agents with secure runtimes, policy enforcement, and execution control.',
+const BUILD_TARGET = (process.env.BUILD_TARGET ?? 'main') as
+  | 'main'
+  | 'dev'
+  | 'docs';
+
+// ======================================================
+// Per-target configuration
+// ======================================================
+
+const configs = {
+  main: {
+    url: 'https://cortexiumlabs.com',
+    title: 'Cortexium Labs',
+    tagline:
+      'Infrastructure for Autonomous AI Systems.',
+  },
+
+  dev: {
+    url: 'https://cortexium.dev',
+    title: 'Cortexium Developer Portal',
+    tagline:
+      'SDKs, APIs, runtimes, tooling, and developer resources for Cortexium products.',
+  },
+
+  docs: {
+    url: 'https://docs.cortexium.dev',
+    title: 'Cortexium Docs',
+    tagline:
+      'Technical documentation for Cortexium products and platforms.',
+  },
+} as const;
+
+const current = configs[BUILD_TARGET];
+
+// ======================================================
+// Base shared configuration
+// ======================================================
+
+const config: Config = {
+  customFields: {
+    buildTarget: BUILD_TARGET,
+  },
+
+  title: current.title,
+  tagline: current.tagline,
+
   favicon: 'img/favicon.ico',
-  url: 'https://cortexium.dev',
+
+  url: current.url,
   baseUrl: '/',
+
   organizationName: 'cortexiumlabs',
   projectName: 'platform',
+
   onBrokenLinks: 'throw',
-  i18n: { 
-    defaultLocale: 'en', 
-    locales: ['en'] 
+
+  i18n: {
+    defaultLocale: 'en',
+    locales: ['en'],
   },
+
+  presets: [],
+
+  plugins: [],
+
   themeConfig: {
     image: 'img/docusaurus-social-card.jpg',
-    colorMode: { respectPrefersColorScheme: true },
+
+    colorMode: {
+      respectPrefersColorScheme: true,
+    },
+
     navbar: {
       title: 'Cortexium',
-      logo: { alt: 'Cortexium Logo', src: 'img/logo.jpg' },
-      items: [], // Will be filled per build target
+      logo: {
+        alt: 'Cortexium Logo',
+        src: 'img/logo.jpg',
+        href: 'https://cortexiumlabs.com',
+      },
+      items: [],
     },
+
     footer: {
       style: 'light',
+
       logo: {
         alt: 'Cortexium Logo',
         src: 'img/horizontal_logo.jpg',
+        href: 'https://cortexiumlabs.com',
         width: 196,
-        // href set conditionally below
       },
+
       copyright: `Copyright © ${new Date().getFullYear()} - <a href="https://cortexiumlabs.com" target="_blank">Cortexium Labs</a> - All rights reserved.`,
     },
+
     prism: {
       theme: prismThemes.github,
       darkTheme: prismThemes.dracula,
@@ -45,99 +108,171 @@ const baseConfig: Config = {
   } satisfies Preset.ThemeConfig,
 };
 
-// ---------- Per‑target overrides ----------
+// ======================================================
+// Build Target Overrides
+// ======================================================
+
 switch (BUILD_TARGET) {
-  // ============================
-  // Main site (cortexium.dev)
-  // ============================
+  // ====================================================
+  // MAIN SITE
+  // cortexiumlabs.com
+  // ====================================================
+
   case 'main': {
-    baseConfig.url = 'https://cortexium.dev';
-  
-    baseConfig.presets = [
+    config.presets = [
+      [
+        'classic',
+        {
+          docs: false,
+          blog: {
+            showReadingTime: true,
+            showLastUpdateTime: true,
+            routeBasePath: 'blog',
+            blogSidebarCount: 10,
+            postsPerPage: 6,
+            blogTitle: 'Blog',
+            blogDescription: 'Technical articles and tutorials'
+          },
+          theme: {
+            customCss: './src/css/custom.css',
+          },
+        } satisfies Preset.Options,
+      ],
+    ];
+
+    config.plugins = [
+      [
+        '@docusaurus/plugin-content-pages',
+        {
+          id: 'products',
+          path: 'products',
+          routeBasePath: '/products',
+          include: ['**/*.{js,jsx,ts,tsx,md,mdx}']
+        },
+      ],
+    ];
+
+    config.themeConfig!.navbar.items = [
+      {
+        href: 'https://docs.cortexium.dev',
+        label: 'Documentation',
+        position: 'left',
+      },
+      // {
+      //   to: '/products', 
+      //   label: 'Products', 
+      //   position: 'left'
+      // },
+      {
+        to: '/blog', 
+        label: 'Blog', 
+        position: 'left'
+      },
+      {
+        href: 'https://github.com/cortexiumlabs',
+        label: 'GitHub',
+        position: 'right',
+      }
+    ];
+
+    break;
+  }
+
+  // ====================================================
+  // DEVELOPER PORTAL
+  // cortexium.dev
+  // ====================================================
+
+  case 'dev': {
+    config.presets = [
       [
         'classic',
         {
           docs: false,
           blog: false,
-          theme: { customCss: './src/css/custom.css' },
+          theme: {
+            customCss: './src/css/custom.css',
+          },
         } satisfies Preset.Options,
       ],
     ];
-  
-    baseConfig.plugins = [];
-  
-    baseConfig.themeConfig!.navbar = {
-      items: [
-        { href: 'https://cortexiumlabs.com', label: 'Home', position: 'left' },
-        { href: 'https://docs.cortexium.dev', label: 'Documentation', position: 'left' },
-        { href: 'https://cortexiumlabs.com/blog', label: 'Blog', position: 'left' },
-        { href: 'https://cortexiumlabs.com/about', label: 'About', position: 'left' },
-      ],
-    };
-  
-    if (baseConfig.themeConfig?.footer?.logo) {
-      baseConfig.themeConfig.footer.logo.href = '/';
-      baseConfig.themeConfig.footer.logo.width = 196;
-    }
-  
+
+    config.themeConfig!.navbar.items = [
+      {
+        href: 'https://cortexiumlabs.com',
+        label: 'Home',
+        position: 'left',
+      },
+      {
+        href: 'https://docs.cortexium.dev',
+        label: 'Docs',
+        position: 'left',
+      },
+      {
+        href: 'https://cortexiumlabs.com/blog',
+        label: 'Blog',
+        position: 'left',
+      },
+      {
+        href: 'https://github.com/cortexiumlabs',
+        label: 'GitHub',
+        position: 'right',
+      },
+    ];
+
     break;
   }
 
-  // ============================
-  // DOCS site (docs.cortexium.dev)
-  // ============================
+  // ====================================================
+  // DOCS
+  // docs.cortexium.dev
+  // ====================================================
+
   case 'docs': {
-    baseConfig.url = 'https://docs.cortexium.dev';
-    baseConfig.presets = [
+    config.presets = [
       [
         'classic',
         {
-          docs: {
-            id: 'product',
-            path: 'product/docs',
-            routeBasePath: '/',         // Product docs at root
-            sidebarPath: require.resolve('./product/sidebars.ts'),
-          },
+          docs: false,
           blog: false,
-          theme: { customCss: './src/css/custom.css' },
+          theme: {
+            customCss: './src/css/custom.css',
+          },
         } satisfies Preset.Options,
       ],
     ];
-    baseConfig.plugins = [
+
+    config.plugins = [
       [
         '@docusaurus/plugin-content-docs',
         {
           id: 'vectra',
           path: 'vectra/docs',
           routeBasePath: 'vectra',
-          sidebarPath: require.resolve('./vectra/sidebars.ts'),
+          sidebarPath: require.resolve(
+            './vectra/sidebars.ts',
+          ),
         },
       ],
     ];
-    baseConfig.themeConfig!.navbar = {
-      items: [
-        { 
-          href: 'https://cortexiumlabs.com', 
-          label: 'Home', 
-          position: 'left' 
-        },
-        {
-          type: 'docSidebar',
-          docsPluginId: 'vectra',
-          sidebarId: 'vectraSidebar',
-          label: 'Vectra',
-          position: 'left',
-        }
-      ]
-    };
 
-    if (baseConfig.themeConfig?.footer?.logo) {
-      baseConfig.themeConfig.footer.logo.href = '/';
-      baseConfig.themeConfig.footer.logo.width = 196;
-    }
-    
+    config.themeConfig!.navbar.items = [
+      {
+        href: '/',
+        label: 'Docs',
+        position: 'left',
+      },
+      {
+        type: 'docSidebar',
+        docsPluginId: 'vectra',
+        sidebarId: 'vectraSidebar',
+        label: 'Vectra',
+        position: 'left',
+      },
+    ];
+
     break;
   }
 }
 
-export default baseConfig;
+export default config;

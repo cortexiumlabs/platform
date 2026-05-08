@@ -5,7 +5,9 @@
   "scripts": {
     "docusaurus": "docusaurus",
     "start": "docusaurus start",
-    "build": "docusaurus build",
+    "build:main": "BUILD_TARGET='main' docusaurus build",
+    "build:dev":  "BUILD_TARGET='dev' docusaurus build",
+    "build:docs": "BUILD_TARGET='docs' docusaurus build",
     "swizzle": "docusaurus swizzle",
     "deploy": "npm run build && wrangler deploy",
     "clear": "docusaurus clear",
