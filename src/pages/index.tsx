@@ -7,25 +7,6 @@ import { useHistory } from '@docusaurus/router';
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import styles from './index.module.css';
 
-const mainProducts = [
-  {
-    name: 'Vectra',
-    description:
-      'Intent-aware governance and runtime control for autonomous AI agents.',
-    link: '/vectra/overview',
-    status: 'core',
-  },
-];
-
-const docsProducts = [
-  {
-    name: 'Vectra',
-    description: 'Governance and runtime control for autonomous AI agents.',
-    link: '/vectra/overview',
-    status: 'core',
-  },
-];
-
 function HeroMain() {
   const { siteConfig } = useDocusaurusContext();
   return (
@@ -41,7 +22,7 @@ function HeroMain() {
           <p className={styles.subtitle}>{siteConfig.tagline}</p>
           <div className={styles.actions}>
             <Link
-              to="/vectra/overview"
+              to="https://docs.cortexium.dev/vectra/overview"
               className={clsx('button button--primary button--lg')}
             >
               Get Started with Vectra
@@ -94,6 +75,15 @@ function AboutMain() {
 }
 
 function ProductsMain() {
+  const mainProducts = [
+    {
+      name: 'Vectra',
+      description: 'Intent-aware governance and runtime control for autonomous AI agents.',
+      link: 'https://docs.cortexium.dev/vectra/overview',
+      status: 'core',
+    },
+  ];
+
   return (
     <section className={styles.products}>
       <div className="container">
