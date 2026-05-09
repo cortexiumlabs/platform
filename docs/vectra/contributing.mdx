@@ -1,0 +1,84 @@
+---
+id: contributing
+title: Contributing
+sidebar_label: Contributing
+---
+
+# Contributing to Vectra
+
+Thank you for your interest in contributing! Vectra welcomes contributions of all kinds — bug fixes, documentation improvements, new features, and more.
+
+---
+
+## Getting Started
+
+1. **Fork** the repository on GitHub: [cortexiumlabs/vectra](https://github.com/cortexiumlabs/vectra)
+2. **Clone** your fork locally:
+   ```bash
+   git clone https://github.com/<your-username>/vectra.git
+   cd vectra
+   ```
+3. **Create a feature branch:**
+   ```bash
+   git checkout -b feature/my-feature
+   ```
+4. **Restore dependencies and build:**
+   ```bash
+   dotnet restore
+   dotnet build
+   ```
+5. **Run tests:**
+   ```bash
+   dotnet test
+   ```
+
+---
+
+## Project Structure
+
+```
+src/
+├── Vectra                              # Host / entry-point
+├── Vectra.Application                  # Use cases & abstractions
+├── Vectra.Domain                       # Domain model
+├── Vectra.Infrastructure               # Implementations
+├── Vectra.Infrastructure.Persistence.Sqlite
+├── Vectra.Infrastructure.Persistence.Common
+└── Vectra.BuildingBlocks               # Shared utilities
+
+tests/
+├── Vectra.Domain.UnitTests
+└── Vectra.BuildingBlocks.UnitTests
+```
+
+---
+
+## Coding Standards
+
+- Target **.NET 10**
+- Follow existing file and namespace conventions
+- Use the `Result<T>` / `Error` pattern (from `Vectra.BuildingBlocks`) for error handling — do not throw exceptions in handlers
+- Write unit tests for all new domain logic and application handlers
+- Keep infrastructure implementations behind interfaces defined in `Vectra.Application`
+
+---
+
+## Submitting a Pull Request
+
+1. Ensure all tests pass: `dotnet test`
+2. Ensure the build is clean: `dotnet build`
+3. Commit with a clear, descriptive message
+4. Push your branch and open a **Pull Request** against `main`
+5. Fill in the PR template describing the change and motivation
+
+---
+
+## Good First Issues
+
+Looking for something to work on? Check out issues labelled [`good first issue`](https://github.com/cortexiumlabs/vectra/issues?q=is%3Aissue+is%3Aopen+label%3A%22good+first+issue%22) on GitHub.
+
+---
+
+## License
+
+By contributing, you agree that your contributions will be licensed under the **Apache 2.0 License**.

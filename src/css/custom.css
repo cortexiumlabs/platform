@@ -38,7 +38,7 @@
 --ifm-color-primary-lighter: #8cffff;
 --ifm-color-primary-lightest: #b8ffff;
 
---ifm-background-color: #0a0f14;
+--ifm-background-color: #0a0f14 !important;
 --ifm-background-surface-color: #0f1720;
 
 --ifm-navbar-background-color: rgba(10, 15, 20, 0.9);

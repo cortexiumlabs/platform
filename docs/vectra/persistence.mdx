@@ -1,0 +1,116 @@
+---
+id: persistence
+title: Persistence
+sidebar_label: Persistence
+---
+
+# Persistence
+
+Vectra uses **Entity Framework Core** for data persistence. Two providers are supported out of the box: **SQLite** (default, zero-config) and **PostgreSQL**.
+
+---
+
+## Entities
+
+### `Agent`
+
+Stores registered agents and their current state.
+
+| Column | Type | Description |
+|---|---|---|
+| `Id` | `Guid` (PK) | Agent identifier |
+| `Name` | `string` | Agent name |
+| `OwnerId` | `string?` | Owner identifier |
+| `Status` | `int` | `AgentStatus` enum value |
+| `PolicyName` | `string?` | Assigned policy name |
+| `ClientSecretHash` | `string` | Bcrypt-hashed client secret |
+| `TrustScore` | `double` | Current trust score |
+| `CreatedAt` | `DateTimeOffset` | Creation timestamp (from `AuditableEntity`) |
+| `UpdatedAt` | `DateTimeOffset?` | Last update timestamp |
+
+### `AgentHistory`
+
+Time-series log of agent request activity used by the risk scoring engine.
+
+| Column | Type | Description |
+|---|---|---|
+| `Id` | `Guid` (PK) | |
+| `AgentId` | `Guid` (FK → Agent) | |
+| `Method` | `string` | HTTP method |
+| `Path` | `string` | Request path |
+| `Timestamp` | `DateTimeOffset` | When the request was made |
+| `DecisionType` | `int` | Allow / Deny / Hitl |
+
+### `AuditTrail`
+
+Immutable audit log of every decision made by the gateway.
+
+| Column | Type | Description |
+|---|---|---|
+| `Id` | `Guid` (PK) | |
+| `AgentId` | `Guid` | |
+| `DecisionType` | `int` | |
+| `Reason` | `string?` | Decision reason |
+| `Method` | `string` | |
+| `Path` | `string` | |
+| `TargetUrl` | `string` | |
+| `RiskScore` | `double` | |
+| `Timestamp` | `DateTimeOffset` | |
+
+---
+
+## Repositories
+
+All repositories implement interfaces defined in `Vectra.Application.Abstractions.Persistence`:
+
+| Interface | Implementation | Description |
+|---|---|---|
+| `IAgentRepository` | `AgentRepository` | CRUD for agents |
+| `IAgentHistoryRepository` | `AgentHistoryRepository` | Append and query recent history |
+| `IAuditRepository` | `AuditRepository` | Append-only audit log |
+
+---
+
+## Database Initialisation
+
+On startup, `SqliteDatabaseInitializer` (which implements `IDatabaseInitializer`) is called by `EnsureApplicationDatabaseCreated()`. This runs `dbContext.Database.EnsureCreatedAsync()`, creating the schema if it does not exist.
+
+---
+
+## Configuration
+
+### SQLite (Default)
+
+```json
+"System": {
+  "Storage": {
+    "Database": {
+      "DefaultProvider": "Sqlite",
+      "Providers": {
+        "Sqlite": { "ConnectionString": "Data Source=vectra.db" }
+      }
+    }
+  }
+}
+```
+
+### PostgreSQL
+
+```json
+"System": {
+  "Storage": {
+    "Database": {
+      "DefaultProvider": "Postgres",
+      "Providers": {
+        "Postgres": {
+          "ConnectionString": "Host=localhost;Database=vectra;Username=vectra;Password=secret"
+        }
+      }
+    }
+  }
+}
+```
+
+:::note
+PostgreSQL support requires the `Vectra.Infrastructure.Persistence.PostgreSQL` package (if available) to be registered in the DI container.
+:::

@@ -1,0 +1,210 @@
+---
+id: getting-started
+title: Getting Started
+sidebar_label: Getting Started
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+# Getting Started
+
+This guide walks you through installing, configuring, and running Vectra for the first time.
+
+
+## Prerequisites
+
+| Requirement | Version |
+|---|---|
+| [.NET SDK](https://dotnet.microsoft.com/download/dotnet/10.0) | 10.0 or later |
+| A supported database | SQLite (default) or PostgreSQL |
+| A supported cache | In-Memory (default) or Redis |
+
+
+## Installation
+
+### Clone the Repository
+
+```bash
+git clone https://github.com/cortexiumlabs/vectra.git
+cd vectra
+```
+
+### Restore & Build
+
+```bash
+dotnet restore
+dotnet build
+```
+
+
+## Running Vectra
+
+Vectra is driven by a CLI entry-point. The simplest way to start the gateway is:
+
+```bash
+dotnet run --project src/Vectra
+```
+
+To check the current version:
+
+```bash
+dotnet run --project src/Vectra -- --version
+```
+
+
+## Minimal Configuration
+
+Vectra is configured through standard ASP.NET Core `appsettings.json` / environment variables. A minimal working configuration looks like:
+
+```json title="appsettings.json"
+{
+  "System": {
+    "Server": {
+      "Http": { "Port": 7080 }
+    },
+    "Storage": {
+      "Database": {
+        "DefaultProvider": "Sqlite",
+        "Providers": {
+          "Sqlite": { "ConnectionString": "Data Source=vectra.db" }
+        }
+      },
+      "Cache": {
+        "DefaultProvider": "Memory"
+      }
+    }
+  },
+  "Security": {
+    "AgentAuth": {
+      "Provider": "SelfSigned"
+    }
+  },
+  "Policy": {
+    "Enabled": true,
+    "DefaultProvider": "Internal",
+    "Providers": {
+      "Internal": { "Directory": "./policies" }
+    }
+  },
+  "HumanInTheLoop": {
+    "Enabled": true,
+    "Threshold": 0.8,
+    "TimeoutSeconds": 3600,
+    "MaxPendingRequests": 100
+  }
+}
+```
+
+
+## Running via Docker
+
+If you prefer to run Vectra as a container, pre-built `Dockerfile`s are available in the `.docker/` directory.
+
+<Tabs groupId="os">
+<TabItem value="linux" label="Linux">
+
+**Build:**
+
+```bash
+docker build \
+  -f .docker/Dockerfile.linux \
+  --build-arg APP_VERSION=1.0.0 \
+  -t vectra:1.0.0 \
+  .
+```
+
+**Run:**
+
+```bash
+docker run -d \
+  --name vectra \
+  -p 7080:7080 \
+  -e System__Storage__Database__Providers__Sqlite__ConnectionString="Data Source=/data/vectra.db" \
+  -e Policy__Providers__Internal__Directory="/policies" \
+  -v $(pwd)/data:/data \
+  -v $(pwd)/policies:/policies \
+  vectra:1.0.0
+```
+
+</TabItem>
+<TabItem value="win2022" label="Windows LTSC 2022">
+
+**Build:**
+
+```powershell
+docker build `
+  -f .docker/Dockerfile.windows-ltsc2022 `
+  --build-arg APP_VERSION=1.0.0 `
+  -t vectra:1.0.0-ltsc2022 `
+  .
+```
+
+**Run:**
+
+```powershell
+docker run -d `
+  --name vectra `
+  -p 7080:7080 `
+  -e System__Storage__Database__Providers__Sqlite__ConnectionString="Data Source=C:\data\vectra.db" `
+  -e Policy__Providers__Internal__Directory="C:\policies" `
+  -v ${PWD}\data:C:\data `
+  -v ${PWD}\policies:C:\policies `
+  vectra:1.0.0-ltsc2022
+```
+
+</TabItem>
+<TabItem value="win2025" label="Windows LTSC 2025">
+
+**Build:**
+
+```powershell
+docker build `
+  -f .docker/Dockerfile.windows-ltsc2025 `
+  --build-arg APP_VERSION=1.0.0 `
+  -t vectra:1.0.0-ltsc2025 `
+  .
+```
+
+**Run:**
+
+```powershell
+docker run -d `
+  --name vectra `
+  -p 7080:7080 `
+  -e System__Storage__Database__Providers__Sqlite__ConnectionString="Data Source=C:\data\vectra.db" `
+  -e Policy__Providers__Internal__Directory="C:\policies" `
+  -v ${PWD}\data:C:\data `
+  -v ${PWD}\policies:C:\policies `
+  vectra:1.0.0-ltsc2025
+```
+
+</TabItem>
+</Tabs>
+
+Once running, Vectra is available at `http://localhost:7080`. The `/health` endpoint confirms it is up:
+
+```bash
+curl http://localhost:7080/health
+# {"status":"Healthy","healthCheckDuration":"00:00:00.0023456"}
+```
+
+For the full Docker reference — HTTPS, Docker Compose with Redis and Seq, volume mounts, and environment variable mappings — see the [Docker](./docker) guide.
+
+
+## First Request Flow
+
+1. **Register an agent** — `POST /agents`
+2. **Obtain a JWT token** — `POST /tokens`
+3. **Proxy a request** — `GET /proxy/https://api.example.com/data` with `Authorization: Bearer <token>`
+
+Vectra will authenticate the agent, evaluate its policy, compute a risk score, and either forward the request or intercept it for human review.
+
+
+## Next Steps
+
+- [Configuration Reference](./configuration/configuration-overview) — Full configuration schema
+- [Agents](./agents) — Registering and managing agents
+- [Policies](./policies/policies-overview) — Writing policy files
+- [Human-in-the-Loop](./hitl) — Reviewing intercepted requests
+- [API Reference](./api-reference) — Full REST API documentation

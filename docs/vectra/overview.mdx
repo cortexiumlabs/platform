@@ -1,45 +1,40 @@
 ---
-sidebar_position: 1
+id: overview
+title: Introduction to Vectra
+sidebar_label: Overview
+slug: /
 ---
 
-# Tutorial Intro
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
 
-Let's discover **Docusaurus in less than 5 minutes**.
+# VECTRA — Intent-Aware Governance Gateway
 
-## Getting Started
+**Vectra** is an open-source **Intent-Aware Governance Gateway** built on **.NET**, designed to secure, monitor, and control interactions between autonomous AI agents, microservices, and complex backend systems.
 
-Get started by **creating a new site**.
+Where traditional API gateways route traffic based on static endpoints and basic credentials, Vectra introduces a **semantic layer of security** by evaluating the *actual intent* behind every proxied API call. This allows teams to establish dynamic guardrails that ensure AI agents and automated systems operate strictly within defined behavioural boundaries.
 
-Or **try Docusaurus immediately** with **[docusaurus.new](https://docusaurus.new)**.
+<img src="/img/vectra/vectra-overview.png" />
 
-### What you'll need
+## Key Capabilities
 
-- [Node.js](https://nodejs.org/en/download/) version 20.0 or above:
-  - When installing Node.js, you are recommended to check all checkboxes related to dependencies.
+| Capability | Description |
+|---|---|
+| **Intent-Based Policy Enforcement** | Move beyond RBAC. Vectra analyses the underlying purpose of each request and enforces context-aware policies that govern *what* an agent is trying to achieve. |
+| **Human-in-the-Loop (HITL) Safeguards** | High-risk, potentially destructive, or anomalous requests are automatically intercepted and held for a human operator to review and approve before execution. |
+| **Adaptive Risk Scoring** | A composable, weighted risk-scoring engine evaluates each request across multiple dimensions — HTTP method, URL path, time-of-day, body size, and agent history. |
+| **Semantic Analysis** | Optional LLM/ONNX-powered semantic evaluation classifies free-form request bodies or intent text for deeper policy decisions. |
+| **Precise Agent Governance** | Each registered agent carries an identity, a trust score, and an assigned policy. The gateway enforces these per-agent rules on every proxied request. |
+| **Circuit Breaker** | Protects upstream services from cascading failures by automatically opening the circuit after repeated failures and recovering automatically. |
+| **Rate Limiting** | Per-agent request throttling prevents runaway agents from overwhelming downstream systems. |
 
-## Generate a new site
 
-Generate a new Docusaurus site using the **classic template**.
+## Why Vectra?
 
-The classic template will automatically be added to your project after you run the command:
+As organisations deploy more LLM-driven agents and complex microservices, establishing *trust* in automated workflows is critical. Vectra bridges the gap between automation and safety — letting agents act freely while keeping humans firmly in control of critical decisions.
 
-```bash
-npm init docusaurus@latest my-website classic
-```
+![Vectra architecture](./img/architecture.png)
 
-You can type this command into Command Prompt, Powershell, Terminal, or any other integrated terminal of your code editor.
+## License
 
-The command also installs all necessary dependencies you need to run Docusaurus.
-
-## Start your site
-
-Run the development server:
-
-```bash
-cd my-website
-npm run start
-```
-
-The `cd` command changes the directory you're working with. In order to work with your newly created Docusaurus site, you'll need to navigate the terminal there.
-
-The `npm run start` command builds your website locally and serves it through a development server, ready for you to view at http://localhost:3000/.
+Vectra is open-source and licensed under the **Apache 2.0 License**.

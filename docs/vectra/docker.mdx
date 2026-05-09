@@ -1,0 +1,299 @@
+---
+id: docker
+title: Running with Docker
+sidebar_label: Docker
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+# Running with Docker
+
+Vectra ships pre-built `Dockerfile`s for three targets, located in the `.docker/` directory:
+
+| File | Base OS | Runtime |
+|---|---|---|
+| `Dockerfile.linux` | Linux (glibc) | `linux-x64` |
+| `Dockerfile.windows-ltsc2022` | Windows Nano Server LTSC 2022 | `win-x64` |
+| `Dockerfile.windows-ltsc2025` | Windows Nano Server LTSC 2025 | `win-x64` |
+
+All images:
+- Expose port **`7080`** (HTTP) by default
+- Set `DOTNET_RUNNING_IN_CONTAINER=true`
+- Accept an `APP_VERSION` build argument
+
+---
+
+## Building the Image
+
+Run all commands from the **repository root** so the build context includes the full `src/` tree.
+
+<Tabs groupId="os">
+<TabItem value="linux" label="Linux">
+
+```bash
+docker build \
+  -f .docker/Dockerfile.linux \
+  --build-arg APP_VERSION=1.0.0 \
+  -t vectra:1.0.0 \
+  .
+```
+
+</TabItem>
+<TabItem value="win2022" label="Windows LTSC 2022">
+
+```powershell
+docker build `
+  -f .docker/Dockerfile.windows-ltsc2022 `
+  --build-arg APP_VERSION=1.0.0 `
+  -t vectra:1.0.0-ltsc2022 `
+  .
+```
+
+</TabItem>
+<TabItem value="win2025" label="Windows LTSC 2025">
+
+```powershell
+docker build `
+  -f .docker/Dockerfile.windows-ltsc2025 `
+  --build-arg APP_VERSION=1.0.0 `
+  -t vectra:1.0.0-ltsc2025 `
+  .
+```
+
+</TabItem>
+</Tabs>
+
+---
+
+## Running the Container
+
+### Minimal (in-memory cache, SQLite)
+
+<Tabs groupId="os">
+<TabItem value="linux" label="Linux">
+
+```bash
+docker run -d \
+  --name vectra \
+  -p 7080:7080 \
+  -e System__Storage__Database__Providers__Sqlite__ConnectionString="Data Source=/data/vectra.db" \
+  -e Policy__Providers__Internal__Directory="/policies" \
+  -v $(pwd)/data:/data \
+  -v $(pwd)/policies:/policies \
+  vectra:1.0.0
+```
+
+</TabItem>
+<TabItem value="win2022" label="Windows LTSC 2022">
+
+```powershell
+docker run -d `
+  --name vectra `
+  -p 7080:7080 `
+  -e System__Storage__Database__Providers__Sqlite__ConnectionString="Data Source=C:\data\vectra.db" `
+  -e Policy__Providers__Internal__Directory="C:\policies" `
+  -v ${PWD}\data:C:\data `
+  -v ${PWD}\policies:C:\policies `
+  vectra:1.0.0-ltsc2022
+```
+
+</TabItem>
+<TabItem value="win2025" label="Windows LTSC 2025">
+
+```powershell
+docker run -d `
+  --name vectra `
+  -p 7080:7080 `
+  -e System__Storage__Database__Providers__Sqlite__ConnectionString="Data Source=C:\data\vectra.db" `
+  -e Policy__Providers__Internal__Directory="C:\policies" `
+  -v ${PWD}\data:C:\data `
+  -v ${PWD}\policies:C:\policies `
+  vectra:1.0.0-ltsc2025
+```
+
+</TabItem>
+</Tabs>
+
+:::tip
+ASP.NET Core reads configuration from environment variables using **double-underscore `__`** as a section separator. `System__Server__Http__Port=7080` maps to `System → Server → Http → Port`.
+:::
+
+---
+
+## Environment Variables Reference
+
+All `appsettings.json` keys can be overridden via environment variables using `__` as a delimiter.
+
+| Environment Variable | Example Value | Description |
+|---|---|---|
+| `System__Server__Http__Port` | `7080` | HTTP listener port |
+| `System__Server__Https__Enabled` | `true` | Enable HTTPS |
+| `System__Server__Https__Port` | `7443` | HTTPS listener port |
+| `System__Storage__Database__DefaultProvider` | `Sqlite` | Database provider |
+| `System__Storage__Database__Providers__Sqlite__ConnectionString` | `Data Source=/data/vectra.db` | SQLite path |
+| `System__Storage__Database__Providers__Postgres__ConnectionString` | `Host=db;Database=vectra;...` | PostgreSQL connection |
+| `System__Storage__Cache__DefaultProvider` | `Memory` or `Redis` | Cache provider |
+| `System__Storage__Cache__Providers__Redis__ConnectionString` | `redis:6379` | Redis address |
+| `System__RateLimit__DefaultRequestsPerMinute` | `60` | Per-agent rate limit |
+| `System__CircuitBreaker__FailureThreshold` | `5` | Failures before circuit opens |
+| `Security__AgentAuth__Provider` | `SelfSigned` or `Jwt` | Auth provider |
+| `Security__AgentAuth__Jwt__Issuer` | `https://auth.example.com` | JWT issuer |
+| `Security__AgentAuth__Jwt__Audience` | `vectra-gateway` | JWT audience |
+| `Security__AgentAuth__Jwt__SecretKey` | `your-key` | JWT signing key |
+| `Policy__Enabled` | `true` | Enable policy engine |
+| `Policy__DefaultProvider` | `Internal` or `Opa` | Policy provider |
+| `Policy__Providers__Internal__Directory` | `/policies` | Policy files directory |
+| `Policy__Providers__Opa__BaseUrl` | `http://opa:8181` | OPA server URL |
+| `Semantic__Enabled` | `false` | Enable semantic analysis |
+| `Semantic__DefaultProvider` | `Internal` | Semantic provider |
+| `Semantic__Providers__OpenAi__ApiKey` | `sk-...` | OpenAI API key |
+| `HumanInTheLoop__Enabled` | `true` | Enable HITL |
+| `HumanInTheLoop__Threshold` | `0.8` | Risk score HITL trigger |
+| `HumanInTheLoop__TimeoutSeconds` | `3600` | HITL request TTL |
+| `HumanInTheLoop__NotificationWebhookUrl` | `https://hooks.example.com/...` | HITL webhook |
+| `Observability__Logging__DefaultLogLevel` | `Information` | Log level |
+| `Observability__Logging__Seq__Enabled` | `true` | Enable Seq sink |
+| `Observability__Logging__Seq__ServerUrl` | `http://seq:5341` | Seq server URL |
+| `SecretManagement__DefaultProvider` | `AzureKeyVault` | Secret provider |
+| `SecretManagement__Providers__AzureKeyVault__VaultUri` | `https://vault.vault.azure.net/` | Key Vault URI |
+
+---
+
+## Volume Mounts
+
+| Container Path (Linux) | Container Path (Windows) | Purpose |
+|---|---|---|
+| `/data` | `C:\data` | SQLite database file |
+| `/policies` | `C:\policies` | JSON policy files |
+| `/app/logs` | `C:\app\logs` | Serilog file sink output |
+| `/certs` | `C:\certs` | TLS certificate (if HTTPS enabled) |
+
+---
+
+## Docker Compose
+
+A full example with Redis, Seq, and OPA:
+
+```yaml title="docker-compose.yml"
+services:
+
+  vectra:
+    image: vectra:1.0.0
+    build:
+      context: .
+      dockerfile: .docker/Dockerfile.linux
+      args:
+        APP_VERSION: "1.0.0"
+    ports:
+      - "7080:7080"
+    environment:
+      System__Storage__Database__DefaultProvider: Sqlite
+      System__Storage__Database__Providers__Sqlite__ConnectionString: "Data Source=/data/vectra.db"
+      System__Storage__Cache__DefaultProvider: Redis
+      System__Storage__Cache__Providers__Redis__ConnectionString: "redis:6379"
+      System__RateLimit__DefaultRequestsPerMinute: "60"
+      System__CircuitBreaker__FailureThreshold: "5"
+      Security__AgentAuth__Provider: SelfSigned
+      Policy__Enabled: "true"
+      Policy__DefaultProvider: Internal
+      Policy__Providers__Internal__Directory: /policies
+      HumanInTheLoop__Enabled: "true"
+      HumanInTheLoop__Threshold: "0.8"
+      HumanInTheLoop__TimeoutSeconds: "3600"
+      Observability__Logging__DefaultLogLevel: Information
+      Observability__Logging__Seq__Enabled: "true"
+      Observability__Logging__Seq__ServerUrl: http://seq:5341
+    volumes:
+      - vectra-data:/data
+      - ./policies:/policies:ro
+      - vectra-logs:/app/logs
+    depends_on:
+      - redis
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:7080/health"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
+
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+    restart: unless-stopped
+
+  seq:
+    image: datalust/seq:latest
+    ports:
+      - "5341:5341"
+      - "8080:80"
+    environment:
+      ACCEPT_EULA: "Y"
+    volumes:
+      - seq-data:/data
+    restart: unless-stopped
+
+volumes:
+  vectra-data:
+  vectra-logs:
+  seq-data:
+```
+
+Start everything:
+
+```bash
+docker compose up -d
+```
+
+---
+
+## HTTPS in Docker
+
+Mount your certificate and set the relevant environment variables:
+
+```bash
+docker run -d \
+  --name vectra \
+  -p 7080:7080 \
+  -p 7443:7443 \
+  -e System__Server__Https__Enabled=true \
+  -e System__Server__Https__Port=7443 \
+  -e System__Server__Https__Certificate__Path=/certs/vectra.pfx \
+  -e System__Server__Https__Certificate__Password=your-cert-password \
+  -v $(pwd)/certs:/certs:ro \
+  vectra:1.0.0
+```
+
+---
+
+## User Security
+
+| Image | Runs as |
+|---|---|
+| `Dockerfile.linux` | Default (`root` in base image — see note below) |
+| `Dockerfile.windows-ltsc2022` | `ContainerUser` (least-privilege built-in account) |
+| `Dockerfile.windows-ltsc2025` | `ContainerUser` (least-privilege built-in account) |
+
+:::warning Linux containers and root
+The Linux image currently runs as `root`. For production deployments, add a non-root user to `Dockerfile.linux`:
+
+```dockerfile
+RUN addgroup --system vectra && adduser --system --ingroup vectra vectra
+USER vectra
+```
+
+This should be placed before the `ENTRYPOINT` in the runtime stage.
+:::
+
+---
+
+## Health Check
+
+Vectra exposes a `/health` endpoint. Use it for Docker health checks and orchestrator readiness probes:
+
+```bash
+curl http://localhost:7080/health
+# {"status":"Healthy","healthCheckDuration":"00:00:00.0023456"}
+```
