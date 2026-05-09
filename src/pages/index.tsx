@@ -22,7 +22,7 @@ function HeroMain() {
           <p className={styles.subtitle}>{siteConfig.tagline}</p>
           <div className={styles.actions}>
             <Link
-              to="https://docs.cortexium.dev/vectra/overview"
+              to="https://docs.cortexium.dev/vectra"
               className={clsx('button button--primary button--lg')}
             >
               Get Started with Vectra
@@ -79,7 +79,7 @@ function ProductsMain() {
     {
       name: 'Vectra',
       description: 'Intent-aware governance and runtime control for autonomous AI agents.',
-      link: 'https://docs.cortexium.dev/vectra/overview',
+      link: 'https://docs.cortexium.dev/vectra',
       status: 'core',
     },
   ];
@@ -123,7 +123,7 @@ export default function Home(): JSX.Element {
     if (buildTarget === 'dev') {
       window.location.replace('https://docs.cortexium.dev');
     } else if (buildTarget === 'docs') {
-      history.replace('/vectra/overview');
+      history.replace('/vectra');
     }
   }, [buildTarget, history]);
 
