@@ -4,61 +4,64 @@ title: Running with Docker
 sidebar_label: Docker
 ---
 
+
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
 # Running with Docker
 
-Vectra ships pre-built `Dockerfile`s for three targets, located in the `.docker/` directory:
+Vectra publishes pre-built images to the GitHub Container Registry (GHCR). The `latest` tag is a **multi-arch manifest** and works on all supported platforms automatically:
 
-| File | Base OS | Runtime |
+| Image Tag | Platforms | Notes |
 |---|---|---|
-| `Dockerfile.linux` | Linux (glibc) | `linux-x64` |
-| `Dockerfile.windows-ltsc2022` | Windows Nano Server LTSC 2022 | `win-x64` |
-| `Dockerfile.windows-ltsc2025` | Windows Nano Server LTSC 2025 | `win-x64` |
+| `ghcr.io/cortexiumlabs/vectra:latest` | linux/amd64, linux/arm64, Windows LTSC 2022, Windows LTSC 2025 | Recommended — Docker selects the correct variant automatically |
+| `ghcr.io/cortexiumlabs/vectra:1.1.0-linux-amd64` | linux/amd64 | Platform-specific pin |
+| `ghcr.io/cortexiumlabs/vectra:1.1.0-linux-arm64` | linux/arm64 | Platform-specific pin |
+| `ghcr.io/cortexiumlabs/vectra:1.1.0-windows-ltsc2022` | Windows Nano Server LTSC 2022 | Platform-specific pin |
+| `ghcr.io/cortexiumlabs/vectra:1.1.0-windows-ltsc2025` | Windows Nano Server LTSC 2025 | Platform-specific pin |
 
 All images:
 - Expose port **`7080`** (HTTP) by default
 - Set `DOTNET_RUNNING_IN_CONTAINER=true`
-- Accept an `APP_VERSION` build argument
 
 ---
 
-## Building the Image
+## Pulling the Image
 
-Run all commands from the **repository root** so the build context includes the full `src/` tree.
-
-<Tabs groupId="os">
-<TabItem value="linux" label="Linux">
+For most cases, pull the multi-arch `latest` tag and Docker will select the correct variant for your host:
 
 ```bash
-docker build \
-  -f .docker/Dockerfile.linux \
-  --build-arg APP_VERSION=1.0.0 \
-  -t vectra:1.0.0 \
-  .
+docker pull ghcr.io/cortexiumlabs/vectra:latest
+```
+
+To pin to a specific platform:
+
+<Tabs groupId="os">
+<TabItem value="linux-amd64" label="Linux (amd64)">
+
+```bash
+docker pull ghcr.io/cortexiumlabs/vectra:1.1.0-linux-amd64
+```
+
+</TabItem>
+<TabItem value="linux-arm64" label="Linux (arm64)">
+
+```bash
+docker pull ghcr.io/cortexiumlabs/vectra:1.1.0-linux-arm64
 ```
 
 </TabItem>
 <TabItem value="win2022" label="Windows LTSC 2022">
 
 ```powershell
-docker build `
-  -f .docker/Dockerfile.windows-ltsc2022 `
-  --build-arg APP_VERSION=1.0.0 `
-  -t vectra:1.0.0-ltsc2022 `
-  .
+docker pull ghcr.io/cortexiumlabs/vectra:1.1.0-windows-ltsc2022
 ```
 
 </TabItem>
 <TabItem value="win2025" label="Windows LTSC 2025">
 
 ```powershell
-docker build `
-  -f .docker/Dockerfile.windows-ltsc2025 `
-  --build-arg APP_VERSION=1.0.0 `
-  -t vectra:1.0.0-ltsc2025 `
-  .
+docker pull ghcr.io/cortexiumlabs/vectra:1.1.0-windows-ltsc2025
 ```
 
 </TabItem>
@@ -81,7 +84,7 @@ docker run -d \
   -e Policy__Providers__Internal__Directory="/policies" \
   -v $(pwd)/data:/data \
   -v $(pwd)/policies:/policies \
-  vectra:1.0.0
+  ghcr.io/cortexiumlabs/vectra:latest
 ```
 
 </TabItem>
@@ -95,7 +98,7 @@ docker run -d `
   -e Policy__Providers__Internal__Directory="C:\policies" `
   -v ${PWD}\data:C:\data `
   -v ${PWD}\policies:C:\policies `
-  vectra:1.0.0-ltsc2022
+  ghcr.io/cortexiumlabs/vectra:1.1.0-windows-ltsc2022
 ```
 
 </TabItem>
@@ -109,7 +112,7 @@ docker run -d `
   -e Policy__Providers__Internal__Directory="C:\policies" `
   -v ${PWD}\data:C:\data `
   -v ${PWD}\policies:C:\policies `
-  vectra:1.0.0-ltsc2025
+  ghcr.io/cortexiumlabs/vectra:1.1.0-windows-ltsc2025
 ```
 
 </TabItem>
@@ -179,12 +182,7 @@ A full example with Redis, Seq, and OPA:
 services:
 
   vectra:
-    image: vectra:1.0.0
-    build:
-      context: .
-      dockerfile: .docker/Dockerfile.linux
-      args:
-        APP_VERSION: "1.0.0"
+    image: ghcr.io/cortexiumlabs/vectra:latest
     ports:
       - "7080:7080"
     environment:
@@ -263,7 +261,7 @@ docker run -d \
   -e System__Server__Https__Certificate__Path=/certs/vectra.pfx \
   -e System__Server__Https__Certificate__Password=your-cert-password \
   -v $(pwd)/certs:/certs:ro \
-  vectra:1.0.0
+  ghcr.io/cortexiumlabs/vectra:latest
 ```
 
 ---
@@ -272,19 +270,12 @@ docker run -d \
 
 | Image | Runs as |
 |---|---|
-| `Dockerfile.linux` | Default (`root` in base image — see note below) |
-| `Dockerfile.windows-ltsc2022` | `ContainerUser` (least-privilege built-in account) |
-| `Dockerfile.windows-ltsc2025` | `ContainerUser` (least-privilege built-in account) |
+| `ghcr.io/cortexiumlabs/vectra:latest` (linux) | `root` (see warning below) |
+| `ghcr.io/cortexiumlabs/vectra:1.1.0-windows-ltsc2022` | `ContainerUser` (least-privilege built-in account) |
+| `ghcr.io/cortexiumlabs/vectra:1.1.0-windows-ltsc2025` | `ContainerUser` (least-privilege built-in account) |
 
 :::warning Linux containers and root
-The Linux image currently runs as `root`. For production deployments, add a non-root user to `Dockerfile.linux`:
-
-```dockerfile
-RUN addgroup --system vectra && adduser --system --ingroup vectra vectra
-USER vectra
-```
-
-This should be placed before the `ENTRYPOINT` in the runtime stage.
+The Linux image currently runs as `root`. For production deployments it is recommended to run the container with a non-root user by adding `--user` to your `docker run` command or setting `user:` in your Compose service.
 :::
 
 ---
