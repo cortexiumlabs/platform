@@ -20,7 +20,7 @@ const configs = {
     url: 'https://cortexiumlabs.com',
     title: 'Cortexium Labs',
     tagline:
-      'Infrastructure for Autonomous AI Systems.',
+      'Building the future of AI infrastructure with secure, scalable, and developer-friendly tools.',
   },
 
   dev: {
@@ -161,11 +161,11 @@ switch (BUILD_TARGET) {
         position: 'left',
         target: '_self',
       },
-      // {
-      //   to: '/products', 
-      //   label: 'Products', 
-      //   position: 'left'
-      // },
+      {
+        to: '/products', 
+        label: 'Products', 
+        position: 'left'
+      },
       {
         to: '/blog', 
         label: 'Blog', 

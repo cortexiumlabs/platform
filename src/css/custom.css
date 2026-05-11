@@ -8,6 +8,8 @@
   --ifm-color-primary-lighter: #00a1a6;
   --ifm-color-primary-lightest: #00c2c8;
 
+  --ifm-background-color: #ffffff !important;
+
   /* Brand accent (your cyan) */
   --ifm-color-info: #37ffff;
 
