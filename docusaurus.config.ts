@@ -211,7 +211,8 @@ switch (BUILD_TARGET) {
       {
         to: 'https://cortexiumlabs.com/products', 
         label: 'Products', 
-        position: 'left'
+        position: 'left',
+        target: '_self'
       },
       {
         href: 'https://cortexiumlabs.com/blog',
@@ -272,7 +273,8 @@ switch (BUILD_TARGET) {
       {
         to: 'https://cortexiumlabs.com/products', 
         label: 'Products', 
-        position: 'left'
+        position: 'left',
+        target: '_self'
       },
       {
         href: 'https://cortexiumlabs.com/blog',
