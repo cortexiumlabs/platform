@@ -1,0 +1,192 @@
+/* ===== Hero (similar to list page, but adapted for single product) ===== */
+.hero {
+    position: relative;
+    background: var(--ifm-hero-bg-start);
+    color: white;
+    padding: 6rem 0 5rem;
+    text-align: center;
+    overflow: hidden;
+    border-bottom: 1px solid var(--ifm-hero-border);
+  }
+  
+  /* Dot pattern */
+  .heroPattern {
+    position: absolute;
+    inset: 0;
+    background-image: radial-gradient(
+      circle at 1px 1px,
+      rgba(255, 255, 255, 0.15) 1px,
+      transparent 0
+    );
+    background-size: 40px 40px;
+    pointer-events: none;
+    animation: shift 20s linear infinite;
+  }
+  @keyframes shift {
+    0% { transform: translate(0, 0); }
+    100% { transform: translate(40px, 40px); }
+  }
+  
+  /* Floating blob */
+  .heroBlob {
+    position: absolute;
+    top: -20%;
+    right: -15%;
+    width: 450px;
+    height: 450px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 50%;
+    filter: blur(60px);
+    pointer-events: none;
+    animation: float 10s ease-in-out infinite alternate;
+  }
+  @keyframes float {
+    0% { transform: translate(0, 0) scale(1); }
+    100% { transform: translate(-30px, -30px) scale(1.1); }
+  }
+  
+  /* Content on top */
+  .heroContent {
+    position: relative;
+    z-index: 2;
+  }
+  
+  .heroIcon {
+    max-width: 120px;
+    max-height: 120px;
+    object-fit: contain;
+    margin-bottom: 1rem;
+  }
+
+  .heroTitle {
+    font-size: 3.2rem;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    margin-bottom: 0.5rem;
+  }
+  
+  .tagline {
+    display: inline-block;
+    font-size: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    background: rgba(255, 255, 255, 0.15);
+    padding: 0.25rem 1rem;
+    border-radius: 20px;
+    margin-bottom: 1.25rem;
+  }
+  
+  .heroDescription {
+    font-size: 1.2rem;
+    opacity: 0.92;
+    max-width: 600px;
+    margin: 0 auto 0.5rem;
+    color: rgba(255, 255, 255, 0.95);
+  }
+  .ctaButton {
+    margin-top: 1.5rem;
+    padding: 0.75rem 2rem;
+    font-size: 1.1rem;
+    font-weight: 600;
+    border-radius: 30px;
+    background: transparent !important;
+    border: 1px solid var(--ifm-color-emphasis-300) !important;
+    color: var(--ifm-hero-subtext) !important;
+    cursor: pointer;
+  
+    transition:
+      background-color 0.3s ease,
+      border-color 0.3s ease,
+      color 0.3s ease,
+      transform 0.3s ease,
+      box-shadow 0.3s ease;
+  }
+  
+  .ctaButton:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+  }
+
+  /* ===== Features Section ===== */
+  .sectionTitle {
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 2rem;
+    text-align: center;
+  }
+  
+  .backLink {
+    font-size: 0.95rem;
+    opacity: 0.8;
+    transition: opacity 0.2s;
+  }
+  .backLink:hover {
+    opacity: 1;
+    text-decoration: none;
+  }
+
+  /* ── Stylish Feature Cards ── */
+.featureCard {
+    background: color-mix(
+        in srgb,
+        var(--ifm-background-color) 85%,
+        transparent
+      );
+    border: 1px solid var(--ifm-color-emphasis-300);
+    border-radius: 12px;
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1.2);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+    overflow: hidden;
+    position: relative;
+    height: 100%;
+  }
+    
+  .featureCard:hover {
+    transform: translateY(-4px);
+    border-color: var(--ifm-color-primary-light);
+    box-shadow: 0 10px 30px rgba(0, 120, 120, 0.15);
+  }
+  .featureCard:hover::before {
+    transform: scaleX(1.02);
+  }
+  
+  .featureIcon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 64px;
+    height: 64px;
+    border-radius: 20px;
+    background: linear-gradient(
+      135deg,
+      var(--ifm-background-surface-color) 0%,
+      var(--ifm-background-surface-color) 100%
+    );
+    margin-bottom: 1.25rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    transition: transform 0.3s, box-shadow 0.3s;
+  }
+  
+  .featureCard:hover .featureIcon {
+    transform: scale(1.08) rotate(-3deg);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+    color: var(--ifm-color-primary) !important;
+  }
+  
+  .featureEmoji {
+    font-size: 2rem;
+    line-height: 1;
+    color: var(--ifm-color-primary) !important;
+  }
+  
+  .featureTitle {
+    font-size: 1.25rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+  }
+  
+  .featureDescription {
+    color: var(--ifm-color-emphasis-700);
+    line-height: 1.6;
+    font-size: 0.95rem;
+  }

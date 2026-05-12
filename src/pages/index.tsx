@@ -23,7 +23,7 @@ function HeroMain() {
           <div className={styles.actions}>
             <Link
               to="https://docs.cortexium.dev/vectra"
-              className={clsx('button button--primary button--lg')}
+              className={`button button--primary button--lg margin-top--md ${styles.heroButton}`}
             >
               Get Started with Vectra
             </Link>

@@ -1,12 +1,7 @@
 /* ===== Hero Core ===== */
 .hero {
     position: relative;
-    background: linear-gradient(
-      135deg,
-      var(--ifm-color-primary-darkest) 0%,
-      var(--ifm-color-primary) 50%,
-      var(--ifm-color-primary-light) 100%
-    );
+    background: var(--ifm-hero-bg-start);
     color: white;
     padding: 6rem 0 7rem;
     margin-bottom: 0;

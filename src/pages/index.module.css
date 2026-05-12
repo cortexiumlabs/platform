@@ -16,9 +16,11 @@
   content: "";
   position: absolute;
   inset: 0;
-  background-image:
-    linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+  background-image: radial-gradient(
+    circle at 1px 1px,
+    rgba(255, 255, 255, 0.15) 1px,
+    transparent 0
+  );
   background-size: 48px 48px;
   mask-image: radial-gradient(circle at center, rgba(0,0,0,1) 40%, rgba(0,0,0,0) 100%);
   -webkit-mask-image: radial-gradient(circle at center, rgba(0,0,0,1) 40%, rgba(0,0,0,0) 100%);
@@ -57,14 +59,7 @@
 
   padding: 4rem;
   border-radius: 20px;
-
-  background: color-mix(
-    in srgb,
-    var(--ifm-background-color) 70%,
-    transparent
-  );
-
-  backdrop-filter: blur(14px);
+  background: transparent;
 
   border: 1px solid transparent;
 
@@ -151,6 +146,30 @@
   font-size: 1.1rem;
   opacity: 0.8;
   margin-top: 1rem;
+}
+
+.heroButton {
+  margin-top: 1.5rem;
+  padding: 0.75rem 2rem;
+  font-size: 1.1rem;
+  font-weight: 600;
+  border-radius: 30px;
+  background: transparent !important;
+  border: 1px solid var(--ifm-color-emphasis-300) !important;
+  color: var(--ifm-hero-subtext) !important;
+  cursor: pointer;
+
+  transition:
+    background-color 0.3s ease,
+    border-color 0.3s ease,
+    color 0.3s ease,
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
+}
+
+.heroButton:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
 }
 
 /* =========================
@@ -327,8 +346,7 @@
 .about {
   padding: 4rem 1rem;
   border-bottom: 1px solid var(--ifm-color-border-gray);
-
-  background: var(--ifm-background-color);
+  background: var(--ifm-background-color) !important;
 }
 
 .aboutInner {
@@ -358,7 +376,7 @@
 
   background: color-mix(
     in srgb,
-    var(--ifm-background-surface-color) 90%,
+    var(--ifm-background-color) 90%,
     transparent
   );
 
