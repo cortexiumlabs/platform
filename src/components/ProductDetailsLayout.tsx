@@ -68,7 +68,6 @@ const ProductDetailsLayout: React.FC<ProductDetailsLayoutProps> = ({
             <div className="row">
               {features.map((feature, idx) => (
                 <div key={idx} className="col col--4 margin-bottom--lg">
-                  {/* 👇 Added featureCard class */}
                   <div className={`card ${styles.featureCard}`}>
                     <div className="card__body">
                       {feature.icon && (

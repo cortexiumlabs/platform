@@ -28,17 +28,17 @@ const vectraFeatures: Feature[] = [
     icon: '🌍',
   },
   {
-    title: 'Developer‑friendly dashboards',
-    description:
-      'Visualize traffic, threats, and policy violations with an intuitive UI and detailed logs.',
-    icon: '📊',
-  },
-  {
     title: 'Secrets management',
     description:
       'Securely store, rotate, and monitor API keys, environment variables, and third‑party credentials.',
     icon: '🔐',
   },
+  {
+    title: 'Human‑in‑the‑loop controls',
+    description:
+      'Pause or modify agent actions based on risk scores, with real‑time notifications and overrides.',
+    icon: '👥',
+  }
 ];
 
 export default function VectraPage(): JSX.Element {
