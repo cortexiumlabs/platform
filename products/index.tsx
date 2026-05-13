@@ -51,8 +51,6 @@ export default function ProductsPage() {
   return (
     <Layout title="Products" description="Building the future of AI infrastructure with secure, scalable, and developer-friendly tools">
       <header className={styles.hero}>
-        <div className={styles.heroPattern} />
-        <div className={styles.heroBlob} />
 
         <div className={`container ${styles.heroContent}`}>
           <h1 className={styles.heroTitle}>

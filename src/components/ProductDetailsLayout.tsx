@@ -34,8 +34,6 @@ const ProductDetailsLayout: React.FC<ProductDetailsLayoutProps> = ({
     <Layout title={name} description={description}>
       {/* ── Hero (unchanged) ── */}
       <header className={styles.hero}>
-        <div className={styles.heroPattern} />
-        <div className={styles.heroBlob} />
 
         <div className={`container ${styles.heroContent}`}>
           {icon && (
