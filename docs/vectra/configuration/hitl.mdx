@@ -1,5 +1,5 @@
 ---
-id: configuration-hitl
+id: hitl
 title: Human-in-the-Loop Configuration
 sidebar_label: Human-in-the-Loop
 ---
@@ -7,8 +7,6 @@ sidebar_label: Human-in-the-Loop
 # Human-in-the-Loop Configuration
 
 The `HumanInTheLoop` section controls when and how Vectra intercepts requests for manual operator review.
-
-**Class:** `Vectra.BuildingBlocks.Configuration.HumanInTheLoop.HumanInTheLoopConfiguration`
 
 ---
 
@@ -41,12 +39,12 @@ The `HumanInTheLoop` section controls when and how Vectra intercepts requests fo
 ## How It Works
 
 1. The `DecisionEngine` computes a risk score for every proxied request.
-2. If the score exceeds `Threshold`, the engine returns a `DecisionResult.Hitl(...)`.
-3. `HitlService.SuspendRequestAsync()` stores the full request in the cache with a TTL of `TimeoutSeconds`.
-4. The gateway responds with `202 Accepted` and a `Location` header pointing to `/hitl/status/{id}`.
+2. If the score exceeds `Threshold`, the engine returns a `Hitl`.
+3. `Hitl Service` stores the full request in the cache with a TTL of `TimeoutSeconds`.
+4. The gateway responds with `202 Accepted` and a `Location` header pointing to `/hitl/{id}`.
 5. An operator polls `/hitl/{id}` or is notified via the webhook.
 6. The operator calls `POST /hitl/{id}/approve` or `POST /hitl/{id}/deny`.
-7. On approval, `HitlService.ReplayAsync()` re-executes the original request against the upstream.
+7. On approval, `Hitl Service` re-executes the original request against the upstream.
 
 See [Human-in-the-Loop](../hitl) for the full operator workflow.
 

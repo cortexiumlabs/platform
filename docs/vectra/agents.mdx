@@ -12,8 +12,6 @@ An **Agent** is the core identity unit in Vectra. Every autonomous AI agent, ser
 
 ## Domain Model
 
-**Class:** `Vectra.Domain.Agents.Agent`
-
 | Property | Type | Description |
 |---|---|---|
 | `Id` | `Guid` | Unique identifier (auto-generated) |
@@ -25,7 +23,7 @@ An **Agent** is the core identity unit in Vectra. Every autonomous AI agent, ser
 | `TrustScore` | `double` | Current trust score (0.0 – 1.0). Default: `0.5` |
 | `AgentHistories` | `ICollection<AgentHistory>` | Time-series history of recent requests |
 
-### `AgentStatus`
+### AgentStatus
 
 | Value | Description |
 |---|---|
@@ -149,5 +147,3 @@ Every agent starts with a trust score of `0.5`. The score is adjusted dynamicall
 | 0.0 – 0.3 | High risk — likely to trigger HITL |
 | 0.3 – 0.7 | Neutral |
 | 0.7 – 1.0 | Trusted — lower likelihood of interception |
-
-Use `Agent.UpdateTrustScore(double)` (internal domain method) to modify the score; the value is clamped to `[0, 1]`.

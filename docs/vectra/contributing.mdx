@@ -38,17 +38,21 @@ Thank you for your interest in contributing! Vectra welcomes contributions of al
 
 ```
 src/
-├── Vectra                              # Host / entry-point
-├── Vectra.Application                  # Use cases & abstractions
-├── Vectra.Domain                       # Domain model
-├── Vectra.Infrastructure               # Implementations
+├── Vectra                                    # Host / entry-point
+├── Vectra.Application                        # Use cases & abstractions
+├── Vectra.Domain                             # Domain model
+├── Vectra.Infrastructure                     # Implementations
 ├── Vectra.Infrastructure.Persistence.Sqlite
 ├── Vectra.Infrastructure.Persistence.Common
-└── Vectra.BuildingBlocks               # Shared utilities
+└── Vectra.BuildingBlocks                     # Shared utilities
 
 tests/
+├── Vectra.Application.UnitTests
+├── Vectra.BuildingBlocks.UnitTests
 ├── Vectra.Domain.UnitTests
-└── Vectra.BuildingBlocks.UnitTests
+├── Vectra.Infrastructure.Persistence.Common.UnitTests
+├── Vectra.Infrastructure.Persistence.Sqlite.UnitTests
+└── Vectra.Infrastructure.UnitTests
 ```
 
 ---

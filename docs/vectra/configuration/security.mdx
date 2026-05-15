@@ -1,5 +1,5 @@
 ---
-id: configuration-security
+id: security
 title: Security Configuration
 sidebar_label: Security
 ---
@@ -8,13 +8,9 @@ sidebar_label: Security
 
 The `Security` section configures how AI agents authenticate with the Vectra gateway.
 
-**Class:** `Vectra.BuildingBlocks.Configuration.Security.SecurityConfiguration`
-
 ---
 
 ## Agent Authentication
-
-**Class:** `AgentAuthConfiguration`
 
 | Property | Type | Default | Description |
 |---|---|---|---|
@@ -68,10 +64,10 @@ Tokens are validated against an external JWT authority (e.g., your own identity 
    - `trust_score` — the agent's current trust score (0.0–1.0)
    - `exp` — expiry
 4. The agent includes the JWT in subsequent requests as `Authorization: Bearer <token>`.
-5. `AgentAuthMiddleware` validates the token on every request and stores `AgentId` and `TrustScore` in `HttpContext.Items`.
+5. `Middleware` validates the token on every request.
 
 ---
 
 ## Secret Management Integration
 
-For production, avoid placing secrets in `appsettings.json`. Use the [Secret Management](./configuration-secret-management) integration to load keys from environment variables or Azure Key Vault.
+For production, avoid placing secrets in `appsettings.json`. Use the [Secret Management](./secret-management) integration to load keys from environment variables or Azure Key Vault.

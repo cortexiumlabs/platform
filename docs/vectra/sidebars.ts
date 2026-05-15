@@ -27,14 +27,14 @@ const sidebars: SidebarsConfig = {
       label: 'Configuration',
       collapsed: true,
       items: [
-        'configuration/configuration-overview',
-        'configuration/configuration-system',
-        'configuration/configuration-security',
-        'configuration/configuration-policy',
-        'configuration/configuration-semantic',
-        'configuration/configuration-hitl',
-        'configuration/configuration-observability',
-        'configuration/configuration-secret-management',
+        'configuration/overview',
+        'configuration/system',
+        'configuration/security',
+        'configuration/policy',
+        'configuration/semantic',
+        'configuration/hitl',
+        'configuration/observability',
+        'configuration/secret-management',
       ],
     },
     {
@@ -47,8 +47,8 @@ const sidebars: SidebarsConfig = {
       label: 'Policies',
       collapsed: true,
       items: [
-        'policies/policies-overview',
-        'policies/policies-examples',
+        'policies/overview',
+        'policies/examples',
       ],
     },
     {
@@ -70,11 +70,6 @@ const sidebars: SidebarsConfig = {
       type: 'doc',
       id: 'hitl',
       label: 'Human-in-the-Loop',
-    },
-    {
-      type: 'doc',
-      id: 'persistence',
-      label: 'Persistence',
     },
     {
       type: 'doc',

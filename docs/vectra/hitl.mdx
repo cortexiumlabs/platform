@@ -12,14 +12,14 @@ The Human-in-the-Loop system allows Vectra to **intercept high-risk requests** a
 
 ## How Interception Works
 
-1. The `DecisionEngine` returns `DecisionResult.Hitl(reason)` when:
+1. The `DecisionEngine` returns `Hitl(reason)` when:
    - A **policy rule** with `Effect: Hitl` matches, or
    - The **risk score** exceeds `HumanInTheLoop.Threshold`
-2. `HitlService.SuspendRequestAsync()` stores the full request in the cache with a TTL of `TimeoutSeconds`.
+2. `HitlService` Suspend Request and stores the full request in the cache with a TTL of `TimeoutSeconds`.
 3. The agent receives:
    ```
    HTTP/1.1 202 Accepted
-   Location: /hitl/status/{id}
+   Location: /hitl/{id}
    ```
 4. An operator reviews the request via the HITL API.
 5. On **approval**, the original request is replayed against the upstream.
@@ -167,4 +167,4 @@ Configure `HumanInTheLoop.NotificationWebhookUrl` to receive a `POST` notificati
 }
 ```
 
-See [HITL Configuration](./configuration/configuration-hitl) for setup details.
+See [HITL Configuration](./configuration/hitl) for setup details.

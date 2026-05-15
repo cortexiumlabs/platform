@@ -1,26 +1,26 @@
 ---
-id: configuration-overview
+id: overview
 title: Configuration Overview
 sidebar_label: Overview
 ---
 
 # Configuration Overview
 
-Vectra uses the standard **ASP.NET Core configuration system** (`appsettings.json`, environment variables, user secrets, Azure Key Vault). Every section maps to a strongly-typed C# configuration class in `Vectra.BuildingBlocks`.
+Vectra uses the standard **ASP.NET Core configuration system** (`appsettings.json`, environment variables, user secrets, Azure Key Vault).
 
 ---
 
 ## Top-Level Sections
 
-| JSON Key | Class | Description |
-|---|---|---|
-| `System` | `SystemConfiguration` | Server, storage, rate limiting, circuit breaker |
-| `Security` | `SecurityConfiguration` | Agent authentication provider |
-| `Policy` | `PolicyConfiguration` | Policy engine provider selection |
-| `Semantic` | `SemanticConfiguration` | Semantic/LLM provider selection |
-| `HumanInTheLoop` | `HumanInTheLoopConfiguration` | HITL thresholds and timeouts |
-| `Observability` | `ObservabilityConfiguration` | Logging sinks |
-| `SecretManagement` | `SecretManagementConfiguration` | External secret provider |
+| JSON Key | Description |
+|---|---|
+| `System` | Server, storage, rate limiting, circuit breaker |
+| `Security` | Agent authentication provider |
+| `Policy` | Policy engine provider selection |
+| `Semantic` | Semantic/LLM provider selection |
+| `HumanInTheLoop` | HITL thresholds and timeouts |
+| `Observability` | Logging sinks |
+| `SecretManagement` | External secret provider |
 
 ---
 
@@ -143,10 +143,10 @@ Vectra uses the standard **ASP.NET Core configuration system** (`appsettings.jso
 
 ## Section Pages
 
-- [System Configuration](./configuration-system)
-- [Security Configuration](./configuration-security)
-- [Policy Configuration](./configuration-policy)
-- [Semantic Configuration](./configuration-semantic)
-- [Human-in-the-Loop Configuration](./configuration-hitl)
-- [Observability Configuration](./configuration-observability)
-- [Secret Management Configuration](./configuration-secret-management)
+- [System Configuration](./system)
+- [Security Configuration](./security)
+- [Policy Configuration](./policy)
+- [Semantic Configuration](./semantic)
+- [Human-in-the-Loop Configuration](./hitl)
+- [Observability Configuration](./observability)
+- [Secret Management Configuration](./secret-management)

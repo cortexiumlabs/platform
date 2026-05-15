@@ -12,23 +12,20 @@ Vectra's **Risk Scoring Engine** evaluates every proxied request against a set o
 
 ## Architecture
 
-```
-RequestContext
-      │
-      ▼
-RiskScoringService
-      │
-      ▼
-RiskScoreAggregator
-      ├── MethodRiskCalculator       (weight: 0.20)
-      ├── PathRiskCalculator         (weight: 0.25)
-      ├── BodySizeRiskCalculator     (weight: 0.10)
-      ├── TimeBasedCalculator        (weight: 0.10)
-      ├── AgentHistoryCalculator     (weight: 0.15)
-      └── AnomalyDetectionCalculator (weight: 0.20)
+```mermaid
+flowchart TD
+  A[RequestContext] --> B[RiskScoringService]
+  B --> C[RiskScoreAggregator]
+
+  C --> D[MethodRiskCalculator<br/>Weight: 0.20]
+  C --> E[PathRiskCalculator<br/>Weight: 0.25]
+  C --> F[BodySizeRiskCalculator<br/>Weight: 0.10]
+  C --> G[TimeBasedCalculator<br/>Weight: 0.10]
+  C --> H[AgentHistoryCalculator<br/>Weight: 0.15]
+  C --> I[AnomalyDetectionCalculator<br/>Weight: 0.20]
 ```
 
-Each calculator returns a score in `[0, 1]`. The aggregator produces a **weighted average** across all calculators:
+Each calculator returns a score in $[0, 1]$. The aggregator produces a **weighted average** across all calculators:
 
 ```
 finalScore = Σ(score_i × weight_i) / Σ(weight_i)
@@ -111,7 +108,7 @@ Examines the agent's recent request history (last 5 minutes) for signs of anomal
 
 ### Anomaly Detection Calculator
 
-Uses the configured `IAnomalyDetector` (backed by the statistical anomaly detector or an external service) to score how unusual this request is relative to the agent's baseline behaviour.
+Uses the configured `AnomalyDetector` (backed by the statistical anomaly detector) to score how unusual this request is relative to the agent's baseline behaviour.
 
 **Weight:** `0.20`
 

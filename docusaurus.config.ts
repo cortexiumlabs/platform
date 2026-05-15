@@ -49,6 +49,10 @@ const config: Config = {
     buildTarget: BUILD_TARGET,
   },
 
+  markdown: {
+    mermaid: true,
+  },
+  
   title: current.title,
   tagline: current.tagline,
 
@@ -71,6 +75,8 @@ const config: Config = {
 
   plugins: [],
 
+  themes: ['@docusaurus/theme-mermaid'],
+  
   themeConfig: {
     image: 'img/docusaurus-social-card.jpg',
 
@@ -78,6 +84,10 @@ const config: Config = {
       respectPrefersColorScheme: true,
     },
 
+    mermaid: {
+      theme: { light: 'neutral', dark: 'dark' },
+    },
+    
     navbar: {
       title: 'Cortexium',
       logo: {
@@ -258,9 +268,9 @@ switch (BUILD_TARGET) {
           routeBasePath: 'vectra',
           sidebarPath: require.resolve(
             './docs/vectra/sidebars.ts',
-          ),
-        },
-      ],
+          )
+        }
+      ]
     ];
 
     config.themeConfig!.navbar.items = [

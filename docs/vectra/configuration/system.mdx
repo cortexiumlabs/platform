@@ -1,5 +1,5 @@
 ---
-id: configuration-system
+id: system
 title: System Configuration
 sidebar_label: System
 ---
@@ -8,13 +8,9 @@ sidebar_label: System
 
 The `System` section controls the HTTP server (Kestrel), storage backends, rate limiting, and circuit breaker behaviour.
 
-**Class:** `Vectra.BuildingBlocks.Configuration.System.SystemConfiguration`
-
 ---
 
 ## Server
-
-**Class:** `ServerConfiguration`
 
 Controls the Kestrel web server.
 
@@ -55,11 +51,7 @@ HTTP and HTTPS ports **must** be different. Vectra will throw an `InvalidOperati
 
 ## Storage
 
-**Class:** `StorageConfiguration`
-
 ### Database
-
-**Class:** `DatabaseConfiguration`
 
 | Property | Type | Default | Description |
 |---|---|---|---|
@@ -78,8 +70,6 @@ HTTP and HTTPS ports **must** be different. Vectra will throw an `InvalidOperati
 
 ### Cache
 
-**Class:** `CacheConfiguration`
-
 | Property | Type | Default | Description |
 |---|---|---|---|
 | `DefaultProvider` | `string` | `"Redis"` | Active cache provider: `"Redis"` or `"Memory"` |
@@ -95,8 +85,6 @@ HTTP and HTTPS ports **must** be different. Vectra will throw an `InvalidOperati
 ---
 
 ## Rate Limiting
-
-**Class:** `RateLimitConfiguration`
 
 Per-agent token-bucket rate limiter.
 
@@ -117,8 +105,6 @@ Agents that exceed the limit receive a `429 Too Many Requests` response with a `
 ---
 
 ## Circuit Breaker
-
-**Class:** `CircuitBreakerConfiguration`
 
 Protects upstream services from repeated failures.
 

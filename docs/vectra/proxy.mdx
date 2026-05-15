@@ -39,18 +39,18 @@ Every proxied request goes through the following stages in order:
 
 ### 1. Agent Authentication
 
-`AgentAuthMiddleware` validates the `Authorization: Bearer <token>` header.
+`Middleware` validates the `Authorization: Bearer <token>` header.
 
-- Missing or invalid token → the request continues unauthenticated (no `AgentId` in context).
-- `ProxyMiddleware` then requires `AgentId` → returns `401 Unauthorized` if absent.
+- Missing or invalid token → the request continues unauthenticated.
+- `Middleware` then requires `AgentId` → returns `401 Unauthorized` if absent.
 
 ### 2. Agent Status Check
 
-The agent is loaded from the repository. If the agent does not exist or has `Status = Revoked`, the request is rejected with `403 Forbidden`.
+If the agent does not exist or has `Status = Revoked`, the request is rejected with `403 Forbidden`.
 
 ### 3. Rate Limiting
 
-`IAgentRateLimiter.IsAllowedAsync()` is called. If the agent has exceeded its configured `RequestsPerMinute`, the gateway returns:
+If the agent has exceeded its configured `RequestsPerMinute`, the gateway returns:
 
 ```
 HTTP/1.1 429 Too Many Requests
@@ -59,11 +59,11 @@ Retry-After: 60
 
 ### 4. Circuit Breaker
 
-`ICircuitBreaker.IsAllowed(upstreamHost)` is checked. If the circuit for the target host is open, the gateway returns `503 Service Unavailable`.
+If the circuit for the target host is open, the gateway returns `503 Service Unavailable`.
 
 ### 5. Decision Engine
 
-A `RequestContext` is constructed and passed to `IDecisionEngine.EvaluateAsync()`. The engine runs three evaluations in sequence:
+A `RequestContext` is constructed and passed to `Decision Engine` for Evaluating. The engine runs three evaluations in sequence:
 
 | Stage | Description | Short-circuits if… |
 |---|---|---|
@@ -83,7 +83,7 @@ A `RequestContext` is constructed and passed to `IDecisionEngine.EvaluateAsync()
 
 ## Request Forwarding
 
-When a request is allowed, Vectra constructs a new `HttpRequestMessage` and forwards it using an `IHttpClientFactory`-managed client.
+When a request is allowed, Vectra constructs a new `Message` and forwards it.
 
 **Headers forwarded:**
 - All headers from the original request, **except**: `Authorization`, `Host`, `Connection`, `Content-Length`
@@ -128,9 +128,9 @@ DELETE /proxy/https://api.example.com/users/all
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5...
 
 HTTP/1.1 202 Accepted
-Location: /hitl/status/abc-123
+Location: /hitl/abc-123
 
-Request pending approval. Poll /hitl/status/abc-123
+Request pending approval. Poll /hitl/abc-123
 ```
 
 The operator can then approve or deny this request via the [HITL endpoints](./hitl).
